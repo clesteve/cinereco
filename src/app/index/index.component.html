@@ -1,0 +1,20 @@
+<div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1">
+  <mat-card class="card grow ma3" style="display:inline-block!important; width: 30vw;min-width:300px; max-width:350px;"
+    *ngFor="let mv of movies">
+    <mat-card-header>
+      <!-- <div mat-card-avatar class="example-header-image"></div> -->
+      <mat-card-title>{{mv.title}}</mat-card-title>
+      <mat-card-subtitle>{{mv.genres}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src={{mv.data.Poster}}>
+    <mat-card-content>
+      <p>
+        {{mv.data.Plot}}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

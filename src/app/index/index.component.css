@@ -1,0 +1,19 @@
+.card {
+    max-width: 400px;
+  }
+  
+  img{
+    max-width:none; 
+    height:350px; 
+    object-fit: cover;
+  }
+
+  .mat-card.grow{
+    transition : transform 0.5s !important;
+}
+
+.mat-card.grow:hover{
+    cursor: pointer;
+    transform : scale(1.05);
+    z-index:99;
+} 
