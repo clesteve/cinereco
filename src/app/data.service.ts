@@ -17,13 +17,19 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  /******************************************************************************/
-  /*                               GET GROUP CLASSES                            */
-  /******************************************************************************/
-
-  getMovies() {
-    const url = environment.api + '/movies';
-    return this.http.get<any>(url, httpOptions);
+  getRecos(liked, disliked, watched) {
+    const url = environment.api + '/reco';
+    const data = { liked, disliked, watched };
+    return this.http.post<any>(url, data);
   }
 
+  getMovies(page, filters) {
+    const url = environment.api + '/movies/' + page;
+    return this.http.post<any>(url, filters);
+  }
+
+  getUser(email) {
+    const url = environment.api + '/users/' + email;
+    return this.http.get<any>(url, httpOptions);
+  }
 }

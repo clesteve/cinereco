@@ -1,0 +1,17 @@
+<h1 mat-dialog-title class='white'>Login</h1>
+<mat-form-field class='w-100'>
+    <mat-label class='white'>E-mail</mat-label>
+    <input matInput (keyup.enter)="login()" [(ngModel)]="email" autocomplete='on'>
+</mat-form-field>
+
+<div class='flex justify-center'>
+    <button class="cf w-80 grow pv2 no-outline-border white mt3 pointer" style='border:none!important' id="loginBtn"
+        (click)="login()">
+        <span class='black' style="display:block" id="connectTitle">
+            Login
+        </span>
+        <span style="display:none" id="loginspinner">
+            <fa-icon class='black' [icon]="faSpinner" [spin]="true"></fa-icon>
+        </span>
+    </button>
+</div>

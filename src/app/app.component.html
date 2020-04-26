@@ -1,8 +1,25 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<h1>
-  Welcome to CineReco
-</h1>
+<fa-icon class='absolute white pt3 pl5 f1 pointer' [matMenuTriggerFor]="menu" [icon]="faUserCircle">
+</fa-icon>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)='openLogin()' *ngIf='!isUser()'>
+    <span>Login</span>
+  </button>
+  <div *ngIf='isUser()'>
+    <span mat-menu-item class='b' disabled>
+      {{user.name}}
+    </span>
+    <button mat-menu-item routerLink="mymovies">
+      <mat-icon>movies</mat-icon> My movies
+    </button>
+    <button mat-menu-item disabled>
+      <mat-icon>settings</mat-icon> Preferences
+    </button>
+    <button mat-menu-item (click)='logout()'>
+      <mat-icon color='warn'>power_settings_new</mat-icon> Log out
+    </button>
+  </div>
+</mat-menu>
 
-<div class='pa5'>
-  <router-outlet></router-outlet>
-</div>
+<h1 routerLink="" class='pointer'>CineReco</h1>
+
+<router-outlet></router-outlet>

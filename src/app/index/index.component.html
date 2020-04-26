@@ -1,20 +1,95 @@
-<div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1">
-  <mat-card class="card grow ma3" style="display:inline-block!important; width: 30vw;min-width:300px; max-width:350px;"
-    *ngFor="let mv of movies">
-    <mat-card-header>
-      <!-- <div mat-card-avatar class="example-header-image"></div> -->
-      <mat-card-title>{{mv.title}}</mat-card-title>
-      <mat-card-subtitle>{{mv.genres}}</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image src={{mv.data.Poster}}>
-    <mat-card-content>
-      <p>
-        {{mv.data.Plot}}
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+<mat-checkbox style="position:absolute; right:20px; margin-top:-25px; z-index:99" [(ngModel)]="sidenav_open">Show
+  selected movies
+</mat-checkbox>
+<mat-sidenav-container style="height:100%">
+  <mat-sidenav #sidenav mode="side" position="end" style="width:20vw; min-width:200px;" [(opened)]="sidenav_open"
+    class='pa2'>
+    <h2>Liked</h2>
+    <li *ngFor="let mv of liked_full">
+      <div class="dib" [matTooltip]="mv.title">
+        {{ (mv.title.length > 25) ? (mv.title | slice:0:25) + '...' : mv.title }}</div> <span class="red pl3 pointer"
+        matTooltip="remove" (click)="like(mv)">x</span>
+    </li>
+    <h2>Disliked</h2>
+    <li *ngFor="let mv of disliked_full">
+      <div class="dib" [matTooltip]="mv.title">
+        {{ (mv.title.length > 25) ? (mv.title | slice:0:25) + '...' : mv.title }}</div> <span class="red pl3 pointer"
+        matTooltip="remove" (click)="dislike(mv)">x</span>
+    </li>
+    <h2>Watched</h2>
+    <li *ngFor="let mv of watched_full">
+      <div class="dib" [matTooltip]="mv.title">
+        {{ (mv.title.length > 25) ? (mv.title | slice:0:25) + '...' : mv.title }}</div> <span class="red pl3 pointer"
+        matTooltip="remove" (click)="watch(mv)">x</span>
+    </li>
+  </mat-sidenav>
+
+  <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1">
+    <mat-form-field (keyup)='applyFilter()' [(ngModel)]='filters.title' style='min-width:200px; width:30vw'
+      appearance="outline" ngDefaultControl>
+      <mat-label>Search</mat-label>
+      <input matInput>
+    </mat-form-field>
+  </div>
+
+
+  <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1">
+    <button mat-raised-button color="accent" (click)="previousPage()" [disabled]="page == 0">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <div class='ml5'>
+      <button mat-raised-button color="primary" style='width:30vw; min-width:200px' (click)="generateReco()"
+        [disabled]="liked.length == 0 || generation_disabled">
+
+        <span id="title">Generate
+          recomandation</span>
+
+        <span style="display:none" id="spinner">
+          <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
+        </span>
+
+      </button>
+    </div>
+    <div class='ml5'>
+      <button (click)="nextPage()" mat-raised-button color="accent">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class='flex justify-center mt5'>
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading" fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1">
+    <mat-card class="card grow ma3 " [style.background-color]="getColor(mv.movieId)"
+      style="display:inline-block!important; width: 30vw;min-width:300px; max-width:350px;" *ngFor="let mv of movies">
+      <mat-card-header>
+        <mat-card-title>{{mv.title}}
+        </mat-card-title>
+        <mat-card-subtitle>{{mv.genres}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image
+        [src]="mv.data.Poster ? (mv.data.Poster.substring(0,4) == 'http' ? mv.data.Poster : 'assets/images/not_found.png') : 'assets/images/not_found.png'">
+      <mat-card-content style="height:80px">
+        <p>
+          {{mv.data.Plot}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions class='mt2 center' style="text-align: center;">
+        <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="w100">
+          <button mat-button class="thumbup" (click)="like(mv)">
+            <mat-icon>thumb_up</mat-icon>
+          </button>
+          <button mat-button class="watched" [style.color]="isWatched(mv.movieId)" (click)="watch(mv)">
+            <mat-icon>remove_red_eye</mat-icon>
+          </button>
+          <button mat-button class="thumbdown" (click)="dislike(mv)">
+            <mat-icon>thumb_down</mat-icon>
+          </button>
+        </div>
+      </mat-card-actions>
+
+    </mat-card>
+  </div>
+</mat-sidenav-container>

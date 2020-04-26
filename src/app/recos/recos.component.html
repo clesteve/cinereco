@@ -1,0 +1,17 @@
+<div style='overflow-y:auto; height:90vh;' fxLayout="row wrap" fxLayoutAlign="center stretch">
+    <mat-card class="card ma3" style="display:inline-block!important; width: 30vw;min-width:300px; max-width:300px;"
+        *ngFor="let mv of data">
+        <mat-card-header>
+            <!-- <div mat-card-avatar class="example-header-image"></div> -->
+            <mat-card-title>{{mv.title}}</mat-card-title>
+            <mat-card-subtitle>{{mv.genres}}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image
+            [src]="mv.data.Poster ? (mv.data.Poster.substring(0,4) == 'http' ? mv.data.Poster : 'assets/images/not_found.png') : 'assets/images/not_found.png'">
+        <mat-card-content>
+            <p>
+                {{mv.data.Plot}}
+            </p>
+        </mat-card-content>
+    </mat-card>
+</div>

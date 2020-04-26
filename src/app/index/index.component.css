@@ -17,3 +17,19 @@
     transform : scale(1.05);
     z-index:99;
 } 
+
+.thumbup:hover{
+  color:green;
+}
+
+.thumbdown:hover{
+  color:red;
+}
+
+.watched:hover{
+  color:yellow;
+}
+
+/deep/ .mat-card-header-text {
+  width: 100%;
+}
