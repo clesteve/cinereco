@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'https://cienv.eba-n9ahpy4v.eu-west-1.elasticbeanstalk.com/'
+  api: 'https://www.mymoviesreco.com'
 };
 
 /*
