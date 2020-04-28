@@ -1,7 +1,7 @@
 # Cinereco
 https://app.mymoviesreco.com/
 
-Get movies recommandation based on user liking similar movies
+Get movies recommandation based on user liking similar movies. \n
 Coded as a way to get through the confinement by both occupying my days coding in and allowing my roommates and I to find new movies to watch at night.
 
 ## Behind the scene 
