@@ -1,9 +1,17 @@
-<mat-checkbox style="position:absolute; right:20px; margin-top:-25px; z-index:99" [(ngModel)]="sidenav_open">Show
+<mat-checkbox style="position:absolute; right:20px; margin-top:-25px; z-index:99" class='show_movies'
+  [(ngModel)]="sidenav_open">Show
   selected movies
 </mat-checkbox>
-<mat-sidenav-container style="height:100%">
-  <mat-sidenav #sidenav mode="side" position="end" style="width:20vw; min-width:200px;" [(opened)]="sidenav_open"
-    class='pa2'>
+
+<div style="text-align:center">
+  <mat-checkbox class='show_movies_small' style="display: none;" [(ngModel)]="sidenav_open">Show
+    selected movies
+  </mat-checkbox>
+</div>
+
+<mat-sidenav-container style="height:100%;">
+  <mat-sidenav #sidenav mode="side" position="end" style="width:20vw; min-width:250px; z-index:1;"
+    [(opened)]="sidenav_open" class='pa2'>
     <h2>Liked</h2>
     <li *ngFor="let mv of liked_full">
       <div class="dib" [matTooltip]="mv.title">
@@ -24,8 +32,8 @@
     </li>
   </mat-sidenav>
 
-  <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1">
-    <mat-form-field (keyup)='applyFilter()' [(ngModel)]='filters.title' style='min-width:200px; width:30vw'
+  <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1" style="width:100vw">
+    <mat-form-field (keyup)='applyFilter()' [(ngModel)]='filters.title' style='min-width:250px; width:30vw'
       appearance="outline" ngDefaultControl>
       <mat-label>Search</mat-label>
       <input matInput>
@@ -33,7 +41,7 @@
   </div>
 
 
-  <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1">
+  <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1 bigscreen" style="height:100%">
     <button mat-raised-button color="accent" (click)="previousPage()" [disabled]="page == 0">
       <mat-icon>chevron_left</mat-icon>
     </button>
@@ -54,6 +62,32 @@
       <button (click)="nextPage()" mat-raised-button color="accent">
         <mat-icon>chevron_right</mat-icon>
       </button>
+    </div>
+  </div>
+
+  <div style='display:none; width:100vw; z-index:99; bottom: 0%; background-color:#303030'
+    class="mt1 smallscreen fixed pt1">
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <button mat-raised-button color="primary" style='width:90vw;' (click)="generateReco()"
+        [disabled]="liked.length == 0 || generation_disabled">
+        <span id="title">Generate
+          recomandation</span>
+        <span style="display:none" id="spinner">
+          <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
+        </span>
+      </button>
+
+      <div class="mt2">
+        <button mat-raised-button color="accent" style="width:44vw" (click)="previousPage()" [disabled]="page == 0">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <div style="width:2vw" class="dib">
+        </div>
+        <button (click)="nextPage()" style="width:44vw" mat-raised-button color="accent">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+
     </div>
   </div>
 
@@ -91,5 +125,8 @@
       </mat-card-actions>
 
     </mat-card>
+  </div>
+  <div class="smallscreen" style="height:75px">
+
   </div>
 </mat-sidenav-container>

@@ -1,5 +1,6 @@
-<fa-icon class='absolute white pt3 pl5 f1 pointer' [matMenuTriggerFor]="menu" [icon]="faUserCircle">
-</fa-icon>
+<!-- <fa-icon class='absolute white pt3 pl5 f1 pointer bigscreen' [matMenuTriggerFor]="menu" [icon]="faUserCircle">
+</fa-icon> -->
+
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)='openLogin()' *ngIf='!isUser()'>
     <span>Login</span>

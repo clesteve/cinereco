@@ -33,3 +33,18 @@
 /deep/ .mat-card-header-text {
   width: 100%;
 }
+
+@media (max-width:600px){
+  .show_movies{
+    display:none;
+  }
+  .show_movies_small{
+    display:block !important;
+  }
+  .bigscreen{
+    display:none !important;
+  }
+  .smallscreen{
+    display:block !important;
+  }
+}
