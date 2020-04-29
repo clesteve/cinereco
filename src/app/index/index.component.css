@@ -15,7 +15,7 @@
 .mat-card.grow:hover{
     cursor: pointer;
     transform : scale(1.05);
-    z-index:99;
+    z-index:98;
 } 
 
 .thumbup:hover{
