@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'https://www.mymoviesreco.com'
+  api: 'http://localhost:5000'  // 'https://www.mymoviesreco.com'
 };
 
 /*

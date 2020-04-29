@@ -98,14 +98,14 @@
   <div *ngIf="!loading" fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1">
     <mat-card class="card grow ma3 " [style.background-color]="getColor(mv.movieId)"
       style="display:inline-block!important; width: 30vw;min-width:300px; max-width:350px;" *ngFor="let mv of movies">
-      <mat-card-header>
+      <mat-card-header (click)="openInfos(mv)">
         <mat-card-title>{{mv.title}}
         </mat-card-title>
         <mat-card-subtitle>{{mv.genres}}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image
+      <img mat-card-image (click)="openInfos(mv)"
         [src]="mv.data.Poster ? (mv.data.Poster.substring(0,4) == 'http' ? mv.data.Poster : 'assets/images/not_found.png') : 'assets/images/not_found.png'">
-      <mat-card-content style="height:80px">
+      <mat-card-content style="height:80px" (click)="openInfos(mv)">
         <p>
           {{mv.data.Plot}}
         </p>

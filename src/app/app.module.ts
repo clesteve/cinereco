@@ -23,16 +23,19 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DataService } from './data.service';
 import { RecosComponent } from './recos/recos.component';
-import { InformationsComponent } from './informations/informations.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { AngularFittextModule } from 'angular-fittext'
+import { AngularFittextModule } from 'angular-fittext';
 
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
+import { FilmOverviewComponent } from './film-overview/film-overview.component';
+import { SafePipe } from './safe.pipe';
+import { RatingModule } from 'ng-starrating';
+
 
 
 @NgModule({
@@ -40,9 +43,10 @@ import { UserComponent } from './user/user.component';
     AppComponent,
     IndexComponent,
     RecosComponent,
-    InformationsComponent,
     LoginComponent,
-    UserComponent
+    UserComponent,
+    FilmOverviewComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,
@@ -63,9 +67,10 @@ import { UserComponent } from './user/user.component';
     MatSidenavModule,
     MatCheckboxModule,
     MatTooltipModule,
-    AngularFittextModule
+    AngularFittextModule,
+    RatingModule
   ],
-  entryComponents: [RecosComponent, LoginComponent],
+  entryComponents: [RecosComponent, LoginComponent, FilmOverviewComponent],
   providers: [DataService],
   bootstrap: [AppComponent]
 })

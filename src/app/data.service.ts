@@ -32,4 +32,9 @@ export class DataService {
     const url = environment.api + '/users/' + email;
     return this.http.get<any>(url, httpOptions);
   }
+
+  getTrailer(title) {
+    const url = environment.api + '/movies/trailer/' + title;
+    return this.http.get<any>(url, httpOptions);
+  }
 }

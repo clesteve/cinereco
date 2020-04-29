@@ -1,0 +1,62 @@
+<mat-dialog-content style="max-height:none">
+    <div fxLayout="row" fxLayoutAlign="left stretch" class="bigscreen">
+        <img [src]="data.data.Poster" style="height:200px" *ngIf="data.data.Poster" />
+        <div class="pl2">
+            <h2 class="mv0">{{data.title}} <span *ngIf="data.data.Year">({{data.data.Year}})</span></h2>
+            <div *ngIf="data.data.Plot">
+                <div class='mb2 white-70' style="font-size: 14px;">{{data.genres}}</div>
+                <b>Director : </b> {{data.data.Director}}<br>
+                <b>Actors : </b> {{data.data.Actors}}<br>
+                <b>Awards : </b> {{data.data.Awards}}<br>
+                <b>BoxOffice : </b> {{data.data.BoxOffice}}<br>
+                <b>Plot : </b>{{data.data.Plot}}
+            </div>
+        </div>
+    </div>
+    <div class="smallscreen" style="display:none">
+        <div fxLayout="row" fxLayoutAlign="left stretch">
+            <img [src]="data.data.Poster" style="height:100px" *ngIf="data.data.Poster" />
+            <div class='pl2'>
+                <h2 class="mv0">{{data.title}} <span *ngIf="data.data.Year">({{data.data.Year}})</span></h2>
+                <div class='mb2 white-70' style="font-size: 14px;">{{data.genres}}</div>
+            </div>
+        </div>
+        <div class="pl2 f6" *ngIf="data.data.Plot">
+            <b>Director : </b> {{data.data.Director}}<br>
+            <b>Actors : </b> {{data.data.Actors}}<br>
+            <b>Awards : </b> {{data.data.Awards}}<br>
+            <b>BoxOffice : </b> {{data.data.BoxOffice}}<br>
+            <b>Plot : </b>{{data.data.Plot}}
+        </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="left stretch" class="pa2" *ngIf="data.data.Plot">
+        <div fxLayout="row" fxLayoutAlign="center center"
+            style="height:50px; width:50px; font-family:Arial, Helvetica, sans-serif; font-size:25px; color:#FFF; "
+            [style.background-color]="getColor(data.data.Metascore)" class="dib">
+            {{data.data.Metascore}}
+        </div>
+        <div class='dib pl3'>
+            <b>Imdb Rating</b>
+            <star-rating [matTooltip]="ImdbRating" [value]="ImdbRating" [totalstars]="10" checkedcolor="yellow"
+                uncheckedcolor="black" size="12px" [readonly]="true">
+            </star-rating>
+            <span class='f6'>({{data.data.imdbVotes}} votes)</span>
+        </div>
+        <div class='dib pl3'>
+            <b>Rotten Tomatoes</b><br>
+            <img [src]='rottenTomato | safe' style="height:25px" class='pl3' />
+            <span class="f3 pl2">{{rottenScore}}%</span>
+        </div>
+    </div>
+
+
+    <div class='tc mt3 container'>
+        <i *ngIf='!trailer' class="mt5 f3 tc"> Loading trailer</i>
+        <div xLayout="row" fxLayoutAlign="center center" *ngIf='!trailer' class='mt5'>
+            <mat-spinner></mat-spinner>
+        </div>
+        <iframe *ngIf="trailer" class="video" [src]="trailer | safe" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+</mat-dialog-content>

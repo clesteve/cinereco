@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { RecosComponent } from '../recos/recos.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { InformationsComponent } from '../informations/informations.component';
+import { FilmOverviewComponent } from '../film-overview/film-overview.component';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -142,8 +142,9 @@ export class IndexComponent implements OnInit {
   }
 
   openInfos(mv) {
-    this.dialog.open(InformationsComponent, {
-      width: '800px',
+    this.dialog.open(FilmOverviewComponent, {
+      width: '80vw',
+      height: '80vh',
       data: mv
     });
   }
