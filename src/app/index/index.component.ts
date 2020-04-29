@@ -19,7 +19,7 @@ export class IndexComponent implements OnInit {
   movies = [];
   liked = [];
   disliked = [];
-  watched = []
+  watched = [];
 
   liked_full = [];
   disliked_full = [];
