@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { DataService } from './data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from './login/login.component';
@@ -15,6 +16,7 @@ export class AppComponent {
     public dialog: MatDialog) { }
 
   faUserCircle = faUserCircle;
+  faGithub = faGithub;
   user = {};
 
   isUser() {
