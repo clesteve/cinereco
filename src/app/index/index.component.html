@@ -1,6 +1,6 @@
-<div style='display:none;' class="smallscreen tc">
-  <h1 routerLink="" class='pointer pl1 mt1 mb1 f3'>
-    <fa-icon [icon]="faFilm" class='mr3'></fa-icon>CineReco
+<div style='display:none;' class="tc smallscreen">
+  <h1 routerLink="" class='pointer pl1 mt1 mb1 f3 bg-black'>
+    <fa-icon [icon]="faFilm" class='mr3' style="color:#ff0000"></fa-icon>CineReco
   </h1>
   <div class='f7'>
     <mat-form-field (keyup)='applyFilter()' [(ngModel)]='filters.title' style='width:80vw' appearance="outline"
@@ -17,9 +17,9 @@
   </mat-checkbox>
 </div>
 
-<div fxLayout="row wrap" fxLayoutAlign="center center" class="mt1 bigscreen" style="height:100%">
-  <h1 routerLink="" class='pointer'>
-    <fa-icon [icon]="faFilm" class='mr3'></fa-icon>CineReco
+<div fxLayout="row wrap" fxLayoutAlign="center center" class="mt1 bigscreen bg-black" style="height:100%">
+  <h1 routerLink="" class='pointer '>
+    <fa-icon [icon]="faFilm" class='mr3' style="color:#ff0000"></fa-icon>CineReco
   </h1>
   <mat-form-field (keyup)='applyFilter()' [(ngModel)]='filters.title' style='min-width:200px; width:20vw'
     appearance="outline" class="pl5" ngDefaultControl>
@@ -124,5 +124,6 @@
       </div>
     </cdk-virtual-scroll-viewport>
   </div>
-
+  <div class="smallscreen w-100" style="height:55px;">
+  </div>
 </mat-sidenav-container>

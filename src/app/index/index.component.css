@@ -8,6 +8,10 @@
     object-fit: cover;
   }
 
+  .mat-card{
+    background-color: #5d5c5c;
+  }
+
   .mat-card.grow{
     transition : transform 0.5s !important;
 }
