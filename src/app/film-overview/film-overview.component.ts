@@ -23,12 +23,12 @@ export class FilmOverviewComponent implements OnInit {
     console.log(this.data);
     this.ImdbRating = parseFloat(this.data.data.imdbRating);
     try {
-      this.rottenScore = parseInt(this.data.data.Ratings[1].Value.substring(0, 2), 10);
+      this.rottenScore = parseInt(this.data.data.Ratings[1].Value.substring(0, this.data.data.Ratings[1].Value.length - 1), 10);
     } catch {
       this.rottenScore = null;
     }
     this.rottenTomato = this.getRottenTomato();
-    this.dataService.getTrailer(this.data.title).subscribe(res => {
+    this.dataService.getTrailer(this.data.movieId).subscribe(res => {
       this.trailer = res;
     });
   }
