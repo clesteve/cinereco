@@ -1,10 +1,17 @@
-<div style='display:none;' class="smallscreen">
-  <h1 routerLink="" class='pointer pl1 mt1 mb1'>
+<div style='display:none;' class="smallscreen tc">
+  <h1 routerLink="" class='pointer pl1 mt1 mb1 f3'>
     <fa-icon [icon]="faFilm" class='mr3'></fa-icon>CineReco
   </h1>
+  <div class='f7'>
+    <mat-form-field (keyup)='applyFilter()' [(ngModel)]='filters.title' style='width:80vw' appearance="outline"
+      ngDefaultControl>
+      <mat-label>Search</mat-label>
+      <input matInput>
+    </mat-form-field>
+  </div>
 </div>
 
-<div style="text-align:center">
+<div style="text-align:center" class="f7">
   <mat-checkbox class='show_movies_small' style="display: none;" [(ngModel)]="sidenav_open">Show
     selected movies
   </mat-checkbox>
@@ -40,7 +47,7 @@
 <div style='display:none; width:100vw; z-index:99; bottom: 0%; background-color:#303030'
   class="mt1 pb2 smallscreen fixed pt1">
   <div fxLayout="column" fxLayoutAlign="center center">
-    <button mat-raised-button color="primary" style='width:90vw; height:60px' (click)="generateReco()"
+    <button mat-raised-button color="primary" style='width:90vw;' (click)="generateReco()"
       [disabled]="liked.length == 0 || generation_disabled">
       <span id="title">Generate
         recomandation</span>
