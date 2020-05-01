@@ -151,11 +151,16 @@ export class IndexComponent implements OnInit {
   }
 
   applyFilter() {
-    this.page = 0;
-    this.last_page = 0;
-    this.dataService.getMovies(this.page, this.filters).subscribe(res => {
-      this.movies = res;
-    });
+    const wordSearch = this.filters.title;
+    setTimeout(() => {
+      if (wordSearch === this.filters.title) {
+        this.page = 0;
+        this.last_page = 0;
+        this.dataService.getMovies(this.page, this.filters).subscribe(res => {
+          this.movies = res;
+        });
+      }
+    }, 200);
   }
 
   nextBatch(e) {
