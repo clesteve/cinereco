@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faFilm } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { DataService } from './data.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,6 +17,8 @@ export class AppComponent {
 
   faUserCircle = faUserCircle;
   faGithub = faGithub;
+  faFilm = faFilm;
+
   user = {};
 
   isUser() {
