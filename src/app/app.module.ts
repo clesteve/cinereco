@@ -35,6 +35,7 @@ import { UserComponent } from './user/user.component';
 import { FilmOverviewComponent } from './film-overview/film-overview.component';
 import { SafePipe } from './safe.pipe';
 import { RatingModule } from 'ng-starrating';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 
@@ -46,8 +47,7 @@ import { RatingModule } from 'ng-starrating';
     LoginComponent,
     UserComponent,
     FilmOverviewComponent,
-    SafePipe
-  ],
+    SafePipe],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -68,7 +68,8 @@ import { RatingModule } from 'ng-starrating';
     MatCheckboxModule,
     MatTooltipModule,
     AngularFittextModule,
-    RatingModule
+    RatingModule,
+    ScrollingModule
   ],
   entryComponents: [RecosComponent, LoginComponent, FilmOverviewComponent],
   providers: [DataService],

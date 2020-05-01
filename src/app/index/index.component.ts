@@ -1,29 +1,48 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DataService } from '../data.service';
 import { RecosComponent } from '../recos/recos.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FilmOverviewComponent } from '../film-overview/film-overview.component';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { ViewChild } from '@angular/core';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { map, tap, scan, mergeMap, throttleTime } from 'rxjs/operators';
+import { faFilm } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  styleUrls: ['./index.component.css'],
 })
+
 export class IndexComponent implements OnInit {
+  @ViewChild(CdkVirtualScrollViewport)
+  viewport: CdkVirtualScrollViewport;
+
+  faFilm = faFilm;
+
+  batch = 20;
+  theEnd = false;
+
+  offset = new BehaviorSubject(null);
+  infinite: Observable<any[]>;
 
   constructor(
     private dataService: DataService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog) {
+  }
 
   movies = [];
   liked = [];
   disliked = [];
   watched = [];
+  last_page = 0;
 
   liked_full = [];
   disliked_full = [];
-  watched_full = []
+  watched_full = [];
 
   page = 0;
   loading = true;
@@ -35,24 +54,6 @@ export class IndexComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.getMovies(this.page).subscribe(res => {
-      this.movies = res;
-      this.loading = false;
-    });
-  }
-
-  nextPage() {
-    this.page += 1;
-    this.loading = true;
-    this.getMovies(this.page).subscribe(res => {
-      this.movies = res;
-      this.loading = false;
-    });
-  }
-
-  previousPage() {
-    this.page -= 1;
-    this.loading = true;
     this.getMovies(this.page).subscribe(res => {
       this.movies = res;
       this.loading = false;
@@ -151,9 +152,29 @@ export class IndexComponent implements OnInit {
 
   applyFilter() {
     this.page = 0;
+    this.last_page = 0;
     this.dataService.getMovies(this.page, this.filters).subscribe(res => {
       this.movies = res;
     });
+  }
+
+  nextBatch(e) {
+    if (this.theEnd) {
+      return;
+    }
+    if (e > this.last_page) {
+      this.last_page = e;
+      this.page += 1;
+      this.loading = true;
+      this.dataService.getMovies(this.page, this.filters).subscribe(res => {
+        this.movies.push(...res);
+        this.loading = false;
+      });
+    }
+  }
+
+  trackByIdx(i) {
+    return i;
   }
 
 }

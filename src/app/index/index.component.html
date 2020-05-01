@@ -1,7 +1,8 @@
-<mat-checkbox style="position:absolute; right:20px; margin-top:-25px; z-index:99" class='show_movies'
-  [(ngModel)]="sidenav_open">Show
-  selected movies
-</mat-checkbox>
+<div style='display:none;' class="smallscreen">
+  <h1 routerLink="" class='pointer pl1 mt1 mb1'>
+    <fa-icon [icon]="faFilm" class='mr3'></fa-icon>CineReco
+  </h1>
+</div>
 
 <div style="text-align:center">
   <mat-checkbox class='show_movies_small' style="display: none;" [(ngModel)]="sidenav_open">Show
@@ -9,9 +10,53 @@
   </mat-checkbox>
 </div>
 
+<div fxLayout="row wrap" fxLayoutAlign="center center" class="mt1 bigscreen" style="height:100%">
+  <h1 routerLink="" class='pointer'>
+    <fa-icon [icon]="faFilm" class='mr3'></fa-icon>CineReco
+  </h1>
+  <mat-form-field (keyup)='applyFilter()' [(ngModel)]='filters.title' style='min-width:200px; width:20vw'
+    appearance="outline" class="pl5" ngDefaultControl>
+    <mat-label>Search</mat-label>
+    <input matInput>
+  </mat-form-field>
+
+  <div class='ml5'>
+    <button mat-raised-button color="primary" style='width:20vw; min-width:200px; height:60px' (click)="generateReco()"
+      [disabled]="liked.length == 0 || generation_disabled">
+
+      <span id="title">Generate
+        recomandation</span>
+
+      <span style="display:none" id="spinner">
+        <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
+      </span>
+    </button>
+  </div>
+  <mat-checkbox class='show_movies_small ml4' [(ngModel)]="sidenav_open">Show
+    selected movies
+  </mat-checkbox>
+</div>
+
+<div style='display:none; width:100vw; z-index:99; bottom: 0%; background-color:#303030'
+  class="mt1 mb2 smallscreen fixed pt1">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <button mat-raised-button color="primary" style='width:90vw; height:60px' (click)="generateReco()"
+      [disabled]="liked.length == 0 || generation_disabled">
+      <span id="title">Generate
+        recomandation</span>
+      <span style="display:none" id="spinner">
+        <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
+      </span>
+    </button>
+  </div>
+</div>
+
 <mat-sidenav-container style="height:100%;">
   <mat-sidenav #sidenav mode="side" position="end" style="width:20vw; min-width:250px; z-index:1;"
     [(opened)]="sidenav_open" class='pa2'>
+    <div fxLayout="row" fxLayoutAlign="flex-end" class="w-100">
+      <mat-icon class='pointer' (click)='sidenav_open = !sidenav_open'>close</mat-icon>
+    </div>
     <h2>Liked</h2>
     <li *ngFor="let mv of liked_full">
       <div class="dib" [matTooltip]="mv.title">
@@ -32,101 +77,45 @@
     </li>
   </mat-sidenav>
 
-  <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1" style="width:100vw">
-    <mat-form-field (keyup)='applyFilter()' [(ngModel)]='filters.title' style='min-width:250px; width:30vw'
-      appearance="outline" ngDefaultControl>
-      <mat-label>Search</mat-label>
-      <input matInput>
-    </mat-form-field>
-  </div>
+  <div class="w-100 h-100">
+    <cdk-virtual-scroll-viewport *ngIf='movies.length > 0' itemSize="350" (scrolledIndexChange)="nextBatch($event)"
+      style='height:80vh'>
+      <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1">
+        <mat-card class="card grow ma3 " [style.background-color]="getColor(mv.movieId)"
+          style="display:inline-block!important; width: 30vw;min-width:300px; max-width:350px;"
+          *ngFor="let mv of movies">
+          <mat-card-header (click)="openInfos(mv)">
+            <mat-card-title>{{mv.title}}
+            </mat-card-title>
+            <mat-card-subtitle>{{mv.genres}}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image (click)="openInfos(mv)"
+            [src]="mv.data.Poster ? (mv.data.Poster.substring(0,4) == 'http' ? mv.data.Poster : 'assets/images/not_found.png') : 'assets/images/not_found.png'">
+          <mat-card-content style="height:80px" (click)="openInfos(mv)">
+            <p>
+              {{mv.data.Plot}}
+            </p>
+          </mat-card-content>
+          <mat-card-actions class='mt2 center' style="text-align: center;">
+            <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="w100">
+              <button mat-button class="thumbup" (click)="like(mv)">
+                <mat-icon>thumb_up</mat-icon>
+              </button>
+              <button mat-button class="watched" [style.color]="isWatched(mv.movieId)" (click)="watch(mv)">
+                <mat-icon>remove_red_eye</mat-icon>
+              </button>
+              <button mat-button class="thumbdown" (click)="dislike(mv)">
+                <mat-icon>thumb_down</mat-icon>
+              </button>
+            </div>
+          </mat-card-actions>
 
-
-  <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1 bigscreen" style="height:100%">
-    <button mat-raised-button color="accent" (click)="previousPage()" [disabled]="page == 0">
-      <mat-icon>chevron_left</mat-icon>
-    </button>
-    <div class='ml5'>
-      <button mat-raised-button color="primary" style='width:30vw; min-width:200px' (click)="generateReco()"
-        [disabled]="liked.length == 0 || generation_disabled">
-
-        <span id="title">Generate
-          recomandation</span>
-
-        <span style="display:none" id="spinner">
-          <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
-        </span>
-
-      </button>
-    </div>
-    <div class='ml5'>
-      <button (click)="nextPage()" mat-raised-button color="accent">
-        <mat-icon>chevron_right</mat-icon>
-      </button>
-    </div>
-  </div>
-
-  <div style='display:none; width:100vw; z-index:99; bottom: 0%; background-color:#303030'
-    class="mt1 smallscreen fixed pt1">
-    <div fxLayout="column" fxLayoutAlign="center center">
-      <button mat-raised-button color="primary" style='width:90vw;' (click)="generateReco()"
-        [disabled]="liked.length == 0 || generation_disabled">
-        <span id="title">Generate
-          recomandation</span>
-        <span style="display:none" id="spinner">
-          <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
-        </span>
-      </button>
-
-      <div class="mt2">
-        <button mat-raised-button color="accent" style="width:44vw" (click)="previousPage()" [disabled]="page == 0">
-          <mat-icon>chevron_left</mat-icon>
-        </button>
-        <div style="width:2vw" class="dib">
+        </mat-card>
+        <div *ngIf="loading" class='flex justify-center mt5'>
+          <mat-spinner></mat-spinner>
         </div>
-        <button (click)="nextPage()" style="width:44vw" mat-raised-button color="accent">
-          <mat-icon>chevron_right</mat-icon>
-        </button>
       </div>
-
-    </div>
+    </cdk-virtual-scroll-viewport>
   </div>
 
-  <div *ngIf="loading" class='flex justify-center mt5'>
-    <mat-spinner></mat-spinner>
-  </div>
-
-  <div *ngIf="!loading" fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1">
-    <mat-card class="card grow ma3 " [style.background-color]="getColor(mv.movieId)"
-      style="display:inline-block!important; width: 30vw;min-width:300px; max-width:350px;" *ngFor="let mv of movies">
-      <mat-card-header (click)="openInfos(mv)">
-        <mat-card-title>{{mv.title}}
-        </mat-card-title>
-        <mat-card-subtitle>{{mv.genres}}</mat-card-subtitle>
-      </mat-card-header>
-      <img mat-card-image (click)="openInfos(mv)"
-        [src]="mv.data.Poster ? (mv.data.Poster.substring(0,4) == 'http' ? mv.data.Poster : 'assets/images/not_found.png') : 'assets/images/not_found.png'">
-      <mat-card-content style="height:80px" (click)="openInfos(mv)">
-        <p>
-          {{mv.data.Plot}}
-        </p>
-      </mat-card-content>
-      <mat-card-actions class='mt2 center' style="text-align: center;">
-        <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="w100">
-          <button mat-button class="thumbup" (click)="like(mv)">
-            <mat-icon>thumb_up</mat-icon>
-          </button>
-          <button mat-button class="watched" [style.color]="isWatched(mv.movieId)" (click)="watch(mv)">
-            <mat-icon>remove_red_eye</mat-icon>
-          </button>
-          <button mat-button class="thumbdown" (click)="dislike(mv)">
-            <mat-icon>thumb_down</mat-icon>
-          </button>
-        </div>
-      </mat-card-actions>
-
-    </mat-card>
-  </div>
-  <div class="smallscreen" style="height:75px">
-
-  </div>
 </mat-sidenav-container>

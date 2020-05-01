@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'https://www.mymoviesreco.com'
+  api: 'http://127.0.0.1:8000/' // 'https://www.mymoviesreco.com'
 };
 
 /*
