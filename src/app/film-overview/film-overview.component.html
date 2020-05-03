@@ -1,10 +1,12 @@
-<mat-dialog-content style="max-height:none">
-    <div fxLayout="row" fxLayoutAlign="left stretch" class="bigscreen">
+<div mat-dialog-title>
+    {{data.title}}
+</div>
+<mat-dialog-content style="max-height:none;">
+    <div fxLayout="row" fxLayoutAlign="left stretch" class="bigscreen mt5 ml2">
         <img [src]="data.data.Poster" style="height:200px" *ngIf="data.data.Poster" />
         <div class="pl2">
-            <h2 class="mv0">{{data.title}} <span *ngIf="data.data.Year">({{data.data.Year}})</span></h2>
             <div *ngIf="data.data.Plot">
-                <div class='mb2 white-70' style="font-size: 14px;">{{data.genres}}</div>
+                <b>Genres : </b> {{data.genres}}<br>
                 <b>Director : </b> {{data.data.Director}}<br>
                 <b>Actors : </b> {{data.data.Actors}}<br>
                 <b>Awards : </b> {{data.data.Awards}}<br>
@@ -13,15 +15,12 @@
             </div>
         </div>
     </div>
-    <div class="smallscreen" style="display:none">
+    <div class="smallscreen mt5 ml2" style="display:none">
         <div fxLayout="row" fxLayoutAlign="left stretch">
             <img [src]="data.data.Poster" style="height:100px" *ngIf="data.data.Poster" />
-            <div class='pl2'>
-                <h2 class="mv0">{{data.title}} <span *ngIf="data.data.Year">({{data.data.Year}})</span></h2>
-                <div class='mb2 white-70' style="font-size: 14px;">{{data.genres}}</div>
-            </div>
         </div>
         <div class="pl2 f6" *ngIf="data.data.Plot">
+            <b>Genres : </b> {{data.genres}}<br>
             <b>Director : </b> {{data.data.Director}}<br>
             <b>Actors : </b> {{data.data.Actors}}<br>
             <b>Awards : </b> {{data.data.Awards}}<br>
@@ -50,13 +49,15 @@
         </div>
     </div>
 
-
-    <div class='tc mt3 container'>
-        <i *ngIf='!trailer' class="mt5 f3 tc"> Loading trailer</i>
-        <div xLayout="row" fxLayoutAlign="center center" *ngIf='!trailer' class='mt5'>
-            <mat-spinner></mat-spinner>
+    <div fxLayout="row" fxLayoutAlign="center center" class='tc'>
+        <div class='mt3 container tc'>
+            <i *ngIf='!trailer' class="mt5 f3 tc"> Loading trailer</i>
+            <div xLayout="row" fxLayoutAlign="center center" *ngIf='!trailer' class='mt5'>
+                <mat-spinner></mat-spinner>
+            </div>
+            <iframe *ngIf="trailer" class="video" [src]="trailer | safe" frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
         </div>
-        <iframe *ngIf="trailer" class="video" [src]="trailer | safe" frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 </mat-dialog-content>

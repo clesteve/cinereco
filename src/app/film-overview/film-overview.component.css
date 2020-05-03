@@ -8,7 +8,7 @@
 
 .container {
     position: relative;
-    width: 100%;
+    width: 80%;
     height: 0;
     padding-bottom: 56.25%;
 }
@@ -20,4 +20,18 @@
     .smallscreen{
         display:block!important;
     }
+}
+
+.mat-dialog-title {
+    padding: 10px;
+    margin:0px;
+    width:80vw;
+    background-color:black;
+    position: fixed;
+    z-index: 99;
+}
+
+/deep/ .mat-dialog-container{
+    padding:0px!important;
+    background-color: #1e272ee0!important;
 }

@@ -36,6 +36,8 @@ import { FilmOverviewComponent } from './film-overview/film-overview.component';
 import { SafePipe } from './safe.pipe';
 import { RatingModule } from 'ng-starrating';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { HelpComponent } from './help/help.component';
 
 
 
@@ -47,7 +49,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     LoginComponent,
     UserComponent,
     FilmOverviewComponent,
-    SafePipe],
+    SafePipe,
+    HelpComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -69,7 +72,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatTooltipModule,
     AngularFittextModule,
     RatingModule,
-    ScrollingModule
+    ScrollingModule,
+    MatProgressBarModule
   ],
   entryComponents: [RecosComponent, LoginComponent, FilmOverviewComponent],
   providers: [DataService],

@@ -1,34 +1,41 @@
-<div style='display:none;' class="tc smallscreen">
-  <h1 routerLink="" class='pointer pl1 mt1 mb1 f3 bg-black'>
-    <fa-icon [icon]="faFilm" class='mr3' style="color:#ff0000"></fa-icon>CineReco
+<div class='fixed w-100' style="z-index: 99; background-color:black;">
+  <div style='display:none;' class="tc smallscreen">
+    <h1 routerLink="" class='pointer pl1 f3 bg-black' style="margin-top: 0px!important; margin-bottom:0px;">
+      <fa-icon [icon]="faFilm" class='mr3' style="color:#ff0000"></fa-icon>CineReco
+    </h1>
+    <div class='f7'>
+      <mat-form-field (keyup)='applyFilter()' [(ngModel)]='filters.title' style='width:80vw' appearance="outline"
+        ngDefaultControl>
+        <mat-label>Search</mat-label>
+        <input matInput>
+      </mat-form-field>
+    </div>
+  </div>
+  <div style="text-align:center" class="f7">
+    <mat-checkbox class='show_movies_small' style="display: none;" [(ngModel)]="sidenav_open">Show
+      selected movies
+    </mat-checkbox>
+  </div>
+</div>
+
+<div class="smallscreen w-100" style="height:100px; display:none">
+</div>
+
+<div fxLayout="row wrap" fxLayoutAlign="center center" class="bigscreen bg-black" style="height:100%;">
+  <h1 routerLink="" class='pointer' style="margin:3px!important;">
+    <fa-icon [icon]="faFilm" class='mr3' style="color:#ff0000;">
+    </fa-icon>CineReco
   </h1>
   <div class='f7'>
-    <mat-form-field (keyup)='applyFilter()' [(ngModel)]='filters.title' style='width:80vw' appearance="outline"
-      ngDefaultControl>
+    <mat-form-field (keyup)='applyFilter()' [(ngModel)]='filters.title' style='min-width:200px; width:20vw;'
+      appearance="outline" class="pl5" ngDefaultControl>
       <mat-label>Search</mat-label>
       <input matInput>
     </mat-form-field>
   </div>
-</div>
-
-<div style="text-align:center" class="f7">
-  <mat-checkbox class='show_movies_small' style="display: none;" [(ngModel)]="sidenav_open">Show
-    selected movies
-  </mat-checkbox>
-</div>
-
-<div fxLayout="row wrap" fxLayoutAlign="center center" class="mt1 bigscreen bg-black" style="height:100%">
-  <h1 routerLink="" class='pointer '>
-    <fa-icon [icon]="faFilm" class='mr3' style="color:#ff0000"></fa-icon>CineReco
-  </h1>
-  <mat-form-field (keyup)='applyFilter()' [(ngModel)]='filters.title' style='min-width:200px; width:20vw'
-    appearance="outline" class="pl5" ngDefaultControl>
-    <mat-label>Search</mat-label>
-    <input matInput>
-  </mat-form-field>
 
   <div class='ml5'>
-    <button mat-raised-button color="primary" style='width:20vw; min-width:200px; height:60px' (click)="generateReco()"
+    <button mat-raised-button color="primary" style='width:20vw; min-width:200px; height:45px' (click)="generateReco()"
       [disabled]="liked.length == 0 || generation_disabled">
 
       <span id="title">Generate
@@ -44,7 +51,7 @@
   </mat-checkbox>
 </div>
 
-<div style='display:none; width:100vw; z-index:99; bottom: 0%; background-color:#303030'
+<div style='display:none; width:100vw; z-index:99; bottom: 0%; background-color:black'
   class="mt1 pb2 smallscreen fixed pt1">
   <div fxLayout="column" fxLayoutAlign="center center">
     <button mat-raised-button color="primary" style='width:90vw;' (click)="generateReco()"
@@ -85,24 +92,24 @@
   </mat-sidenav>
 
   <div class="w-100 h-100">
-    <cdk-virtual-scroll-viewport *ngIf='movies.length > 0' itemSize="350" (scrolledIndexChange)="nextBatch($event)"
-      style='height:80vh'>
+    <cdk-virtual-scroll-viewport *ngIf='movies.length > 0' itemSize="500" (scrolledIndexChange)="nextBatch($event)"
+      style='height:90vh'>
       <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt1">
-        <mat-card class="card grow ma3 " [style.background-color]="getColor(mv.movieId)"
-          style="display:inline-block!important; width: 30vw;min-width:300px; max-width:350px;"
+        <mat-card class="card grow ma1 " [style.background-color]="getColor(mv.movieId)"
+          style="display:inline-block!important; width: 15vw;min-width:250px; max-width:350px;"
           *ngFor="let mv of movies">
           <mat-card-header (click)="openInfos(mv)">
-            <mat-card-title>{{mv.title}}
+            <mat-card-title style='font-size:14px!important;'>{{mv.title}}
             </mat-card-title>
-            <mat-card-subtitle>{{mv.genres}}</mat-card-subtitle>
+            <mat-card-subtitle>{{ (mv.genres.length > 30) ? (mv.genres | slice:0:25) + '...' : mv.genres }}
+            </mat-card-subtitle>
           </mat-card-header>
-          <img mat-card-image (click)="openInfos(mv)"
-            [src]="mv.data.Poster ? (mv.data.Poster.substring(0,4) == 'http' ? mv.data.Poster : 'assets/images/not_found.png') : 'assets/images/not_found.png'">
-          <mat-card-content style="height:80px" (click)="openInfos(mv)">
-            <p>
-              {{mv.data.Plot}}
-            </p>
-          </mat-card-content>
+          <div style='position:relative;' class='pointer w-100' (click)="openInfos(mv)">
+            <img mat-card-image
+              [src]="mv.data.Poster ? (mv.data.Poster.substring(0,4) == 'http' ? mv.data.Poster : 'assets/images/not_found.png') : 'assets/images/not_found.png'">
+            <p class='plot_container'>
+              {{mv.data.Plot}}</p>
+          </div>
           <mat-card-actions class='mt2 center' style="text-align: center;">
             <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="w100">
               <button mat-button class="thumbup" (click)="like(mv)">
@@ -118,12 +125,18 @@
           </mat-card-actions>
 
         </mat-card>
-        <div *ngIf="loading" class='flex justify-center mt5'>
-          <mat-spinner></mat-spinner>
-        </div>
+      </div>
+      <div *ngIf="loading && movies.length" class='flex justify-center mt5 white' style='z-index:99; margin-top:-20px;'>
+        <h1>L <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon> ADING
+        </h1>
       </div>
     </cdk-virtual-scroll-viewport>
   </div>
   <div class="smallscreen w-100" style="height:55px;">
   </div>
 </mat-sidenav-container>
+
+<div *ngIf="!movies.length" class='flex justify-center mt5 white' style='z-index:99;'>
+  <h1>L <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon> ADING
+  </h1>
+</div>

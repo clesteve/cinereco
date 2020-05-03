@@ -8,8 +8,26 @@
     object-fit: cover;
   }
 
+  .plot_container{
+    position:absolute; 
+    bottom:10px; 
+    width:100%; 
+    font-size:12px; 
+    background-color:#303030b9; 
+    border-radius:5px; 
+    padding:10px;
+  }
+
+/deep/ .mat-card-actions {
+  margin-top: -20px!important;
+}
+
+/deep/ .mat-drawer-container {
+  background-color: black;
+}
+
   .mat-card{
-    background-color: #5d5c5c;
+    background-color: #1e272e;
   }
 
   .mat-card.grow{
@@ -18,7 +36,7 @@
 
 .mat-card.grow:hover{
     cursor: pointer;
-    transform : scale(1.05);
+    transform : scale(1.02);
     z-index:98;
 } 
 
@@ -42,7 +60,19 @@
   width: 100%;
 }
 
+/deep/ .mat-card>:first-child{
+  margin-top: -7px!important;
+  margin-bottom: 5px;
+}
+
 @media (max-width:600px){
+
+  .mat-card.grow:hover{
+    cursor: pointer;
+    transform : none!important;
+    z-index:98;
+} 
+
   .show_movies{
     display:none;
   }
@@ -55,4 +85,8 @@
   .smallscreen{
     display:block !important;
   }
+}
+
+/deep/ .mat-drawer{
+  background-color: #1e272e;
 }

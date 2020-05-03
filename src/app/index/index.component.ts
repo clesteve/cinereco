@@ -129,7 +129,7 @@ export class IndexComponent implements OnInit {
     (document.getElementById('title') as HTMLInputElement).style.display = 'none';
     this.dataService.getRecos(this.liked, this.disliked, this.watched).subscribe(res => {
       const dialogRef = this.dialog.open(RecosComponent, {
-        width: '800px',
+        width: '70vw',
         data: res
       }
       );
@@ -145,7 +145,7 @@ export class IndexComponent implements OnInit {
   openInfos(mv) {
     this.dialog.open(FilmOverviewComponent, {
       width: '80vw',
-      height: '80vh',
+      height: '85vh',
       data: mv
     });
   }
@@ -156,11 +156,14 @@ export class IndexComponent implements OnInit {
       if (wordSearch === this.filters.title) {
         this.page = 0;
         this.last_page = 0;
+        this.loading = true;
+        this.movies = [];
         this.dataService.getMovies(this.page, this.filters).subscribe(res => {
           this.movies = res;
+          this.loading = false;
         });
       }
-    }, 200);
+    }, 400);
   }
 
   nextBatch(e) {

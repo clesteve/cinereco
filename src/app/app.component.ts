@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { faUserCircle, faFilm } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faFilm, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { DataService } from './data.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from './login/login.component';
+import { HelpComponent } from './help/help.component';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent {
   faUserCircle = faUserCircle;
   faGithub = faGithub;
   faFilm = faFilm;
+  faQuestionCircle = faQuestionCircle;
 
   user = {};
 
@@ -32,6 +34,12 @@ export class AppComponent {
 
   openLogin() {
     this.dialog.open(LoginComponent, {
+      width: '600px'
+    });
+  }
+
+  openHelp() {
+    this.dialog.open(HelpComponent, {
       width: '600px'
     });
   }

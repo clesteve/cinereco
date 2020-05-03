@@ -21,7 +21,7 @@ export class RecosComponent implements OnInit {
   openInfos(mv) {
     this.dialog.open(FilmOverviewComponent, {
       width: '80vw',
-      height: '80vh',
+      height: '85vh',
       data: mv
     });
   }
